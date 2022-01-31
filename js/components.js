@@ -11,5 +11,14 @@ fetch('../data.json')
     .catch(data => {
         dataObject = {};
         console.log(error);
-    })
-console.log(dataObject)
+    });
+
+function generateContainer() {
+    // Generate containers for each available job
+    const parentElement = document.getElementById("main-container");
+
+    const container = document.createElement('div');
+    parentElement.appendChild(container);
+    console.log(parentElement, container)
+}
+// generateContainer()

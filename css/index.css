@@ -1,0 +1,22 @@
+:root {
+    --primary: hsl(180, 29%, 50%);
+    --cyan-bg: hsl(180, 52%, 96%);
+    --cyan-filter-tab: hsl(180, 31%, 95%);
+    --dark-grayish-cyan: hsl(180, 8%, 52%);
+    --very-dark-grayish-cyan: hsl(180, 14%, 20%);
+    font-family: 'Spartan', sans-serif;
+    font-size: 15px;
+}
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+#main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 5rem;
+}
