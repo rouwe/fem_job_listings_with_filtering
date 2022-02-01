@@ -1,12 +1,96 @@
 .job-container {
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    border-left: 5px solid var(--primary);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    box-shadow: 0px 3px 10px hsl(180, 29%, 50%, 0.4);
 }
-
+.details-container {
+    position: relative;
+    padding: 40px 24px 0 19px;
+}
+.img-box {
+    position: absolute;
+    top: -22px;
+    display: flex;
+    align-items: center;
+}
+.company-img {
+    width: 48px;
+    height: auto;
+}
+.details-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: 600;
+    margin-top: -5px;
+}
+.status-box {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.company-name {
+    font-size: 0.85rem;
+    letter-spacing: 0.2px;
+    margin-right: 10px;
+    color: var(--primary);
+}
+.status {
+    padding: 5px 8px;
+    margin: 0 4px;
+    border-radius: 25px;
+}
+.status-new {
+    color: hsl(0, 0%, 100%);
+    background-color: var(--primary);
+}
+.status-featured {
+    color: hsl(0, 0%, 100%);
+    background-color: var(--very-dark-grayish-cyan); 
+}
+.status p {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transform: translateY(2px);
+    margin: 0;
+}
+.job-role {
+    font-size: 1rem;
+    margin: 12px 0;
+    color: var(--very-dark-grayish-cyan);
+}
+.more-info-box {
+    display: flex;
+    font-size: 0.85rem;
+    font-weight: 400;
+    list-style-type: none;
+    padding: 0;
+    margin: 5px 0;
+    color: hsl(0, 0%, 59%);
+}
+.time-passed {
+    margin-right: 25px;
+}
+.employment-type, .country-base {
+    margin-right: 25px;
+    list-style-type: disc;
+}
 .job-hr {
     width: 100%;
-    padding: 0.5px 0;
+    align-self: center;
+    padding: 0.7px 19px;
+    margin: 12px 0;
     border: none;
-    background-color: var(--dark-grayish-cyan);
+    background-color: hsl(0, 0%, 59%, 0.5);
+}
+.tag-box {
+    display: grid;
+    grid-auto-columns: min-content;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(3, fit-content);
 }
