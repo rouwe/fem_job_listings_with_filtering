@@ -2,6 +2,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    padding: 0 0 20px;
     border-left: 5px solid var(--primary);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -13,11 +14,11 @@
 }
 .img-box {
     position: absolute;
-    top: -22px;
+    top: -23px;
     display: flex;
     align-items: center;
 }
-.company-img {
+.logo {
     width: 48px;
     height: auto;
 }
@@ -33,22 +34,22 @@
     justify-content: flex-start;
     align-items: center;
 }
-.company-name {
+.company {
     font-size: 0.85rem;
     letter-spacing: 0.2px;
-    margin-right: 10px;
+    margin-right: 12px;
     color: var(--primary);
 }
 .status {
-    padding: 5px 8px;
+    padding: 6px 8px 5px;
     margin: 0 4px;
     border-radius: 25px;
 }
-.status-new {
+.new {
     color: hsl(0, 0%, 100%);
     background-color: var(--primary);
 }
-.status-featured {
+.featured {
     color: hsl(0, 0%, 100%);
     background-color: var(--very-dark-grayish-cyan); 
 }
@@ -59,7 +60,7 @@
     transform: translateY(2px);
     margin: 0;
 }
-.job-role {
+.position {
     font-size: 1rem;
     margin: 12px 0;
     color: var(--very-dark-grayish-cyan);
@@ -73,10 +74,10 @@
     margin: 5px 0;
     color: hsl(0, 0%, 59%);
 }
-.time-passed {
+.postedAt {
     margin-right: 25px;
 }
-.employment-type, .country-base {
+.contract, .location {
     margin-right: 25px;
     list-style-type: disc;
 }
@@ -89,8 +90,20 @@
     background-color: hsl(0, 0%, 59%, 0.5);
 }
 .tag-box {
-    display: grid;
-    grid-auto-columns: min-content;
-    grid-auto-flow: column;
-    grid-template-columns: repeat(3, fit-content);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0px 24px 0 19px;
+}
+.tag-box span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 7px 8px 5px;
+    margin: 8px 10px 8px 0;
+    border-radius: 3px;
+    color: var(--primary);
+    background-color: hsl(180, 29%, 50%, 0.12);
+}
+.tag-box span:last-child {
+    margin-right: auto;
 }
