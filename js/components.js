@@ -50,51 +50,51 @@ $(document).ready(() => {
             }
         }
     }
-    // Builder TEST
-    const createContainer = new ElementBuilder('div');
-    const createLogo = new ElementBuilder('img');
-    const createSpan = new ElementBuilder('span');
-    const createParagraph = new ElementBuilder('p');
-    const createUlist = new ElementBuilder('ul');
-    const createListItem = new ElementBuilder('li');
-    const createHr = new ElementBuilder('hr');
-
-    // Job Container
-    createContainer.buildElement('main-container', ['job-container']);
-    // Details box
-    createContainer.buildElement('job-container', ['details-container']);
-    // Image
-    createContainer.buildElement('details-container', ['img-box']);
-    createLogo.buildElement('img-box', ['logo']);
-    createLogo.addAttribute('img-box', 'logo', "src", '../images/photosnap.svg');
-    // Details box
-    createContainer.buildElement('details-container', ['details-box']);
-    createContainer.buildElement('details-box', ['status-box']);
-    createSpan.buildElement('status-box', ['company']);
-    createSpan.buildElement('status-box', ['new', 'status']);
-    createSpan.buildElement('status-box', ['featured', 'status']);
-    createParagraph.buildElement('details-box', ['position']);
-    createUlist.buildElement('details-box', ['more-info-box']);
-    createListItem.buildElement('more-info-box', ['postedAt']);
-    createListItem.buildElement('more-info-box', ['contract']);
-    createListItem.buildElement('more-info-box', ['location']);
-    // Mobile Hrule
-    createHr.buildElement('details-container', ['job-hr']);
-    // Tags
-    createContainer.buildElement('job-container', ['tag-box']);
-    createSpan.buildElement('tag-box', ['role']);
-    createSpan.buildElement('tag-box', ['level']);
-    createSpan.buildElement('tag-box', ['languages'], 3);
-    createSpan.buildElement('tag-box', ['tools'], 0);
     // Fetch JSON file
     $.getJSON("../data.json", (result, status) => {
         if (status === "success") {
-            // for (const key in result[0]) {
-            //     if (key === 'languages' || key === 'tools') {
-            //         console.log(result[0][key])
-            //     }
-            // };
-            console.log(result)
+            // Define element builder
+            const createContainer = new ElementBuilder('div');
+            const createLogo = new ElementBuilder('img');
+            const createSpan = new ElementBuilder('span');
+            const createParagraph = new ElementBuilder('p');
+            const createUlist = new ElementBuilder('ul');
+            const createListItem = new ElementBuilder('li');
+            const createHr = new ElementBuilder('hr');
+
+            // console.log(tempContent.company)
+            // Job Container
+            createContainer.buildElement('main-container', ['job-container'], 2);
+            // Details box
+            createContainer.buildElement('job-container', ['details-container']);
+            // Image
+            createContainer.buildElement('details-container', ['img-box']);
+            createLogo.buildElement('img-box', ['logo']);
+            // Details box
+            createContainer.buildElement('details-container', ['details-box']);
+            createContainer.buildElement('details-box', ['status-box']);
+            createSpan.buildElement('status-box', ['company']);
+            createSpan.buildElement('status-box', ['new', 'status']);
+            createSpan.buildElement('status-box', ['featured', 'status']);
+            createParagraph.buildElement('details-box', ['position']);
+            createUlist.buildElement('details-box', ['more-info-box']);
+            createListItem.buildElement('more-info-box', ['postedAt']);
+            createListItem.buildElement('more-info-box', ['contract']);
+            createListItem.buildElement('more-info-box', ['location']);
+            // Mobile Hrule
+            createHr.buildElement('details-container', ['job-hr']);
+            // Tags
+            createContainer.buildElement('job-container', ['tag-box']);
+            createSpan.buildElement('tag-box', ['role']);
+            createSpan.buildElement('tag-box', ['level']);
+            createSpan.buildElement('tag-box', ['languages'], 3);
+            createSpan.buildElement('tag-box', ['tools'], 0);
+            // Addition of elements attribute
+            const imgBoxLength = $(".img-box").length;
+            for (let jobNumber = 0; jobNumber < imgBoxLength; jobNumber++) {
+                console.log(result[jobNumber]['logo'])
+                createLogo.addAttribute('img-box', 'logo', "src", `${result[jobNumber]['logo']}`);
+            }
         } else {
             console.log(`Error:${status}`);
         }
