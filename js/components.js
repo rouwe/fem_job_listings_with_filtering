@@ -31,7 +31,7 @@ $(document).ready(() => {
                 }
             }
         }
-        addAttribute(buildParentClass, targetClass, attrName, attrValue) {
+        addAttribute(targetClass, targetId, attrName, attrValue) {
             /*
             * Description. Add attributes to an element.
             * @param {String} buildParentClass - parent element selector.
@@ -39,12 +39,10 @@ $(document).ready(() => {
             * @param {String} attrName - attribute to be added.
             * @param {String} attrValue - attribute value.
             */
-           const parentElement = document.querySelectorAll(`.${buildParentClass}`);
-            if (buildParentClass && targetClass && attrName && attrValue) {
-                for (let parentCount = 0; parentCount < parentElement.length; parentCount++) {
-                    const targetElement = document.querySelectorAll(`.${targetClass}`);
-                    $(targetElement[parentCount]).attr(attrName, attrValue);
-                }
+           const targetElement = document.querySelectorAll(`.${targetClass}`)[targetId];
+           console.log(targetElement, targetId)
+            if (targetClass && attrName && attrValue) {
+                $(targetElement).attr(attrName, attrValue);
             } else {
                 throw new Error("Attribute insertion failed: Missing object parameters");
             }
@@ -62,10 +60,13 @@ $(document).ready(() => {
             const createListItem = new ElementBuilder('li');
             const createHr = new ElementBuilder('hr');
 
-            // console.log(tempContent.company)
-            // Job Container
-            createContainer.buildElement('main-container', ['job-container'], 2);
-            // Details box
+            // console.log(result)
+            for (const jobId in result) {
+                // console.log(result[jobId])
+                // Job Container
+                createContainer.buildElement('main-container', ['job-container']);
+            }
+            // Details container
             createContainer.buildElement('job-container', ['details-container']);
             // Image
             createContainer.buildElement('details-container', ['img-box']);
@@ -73,28 +74,32 @@ $(document).ready(() => {
             // Details box
             createContainer.buildElement('details-container', ['details-box']);
             createContainer.buildElement('details-box', ['status-box']);
-            createSpan.buildElement('status-box', ['company']);
-            createSpan.buildElement('status-box', ['new', 'status']);
-            createSpan.buildElement('status-box', ['featured', 'status']);
             createParagraph.buildElement('details-box', ['position']);
             createUlist.buildElement('details-box', ['more-info-box']);
-            createListItem.buildElement('more-info-box', ['postedAt']);
-            createListItem.buildElement('more-info-box', ['contract']);
-            createListItem.buildElement('more-info-box', ['location']);
-            // Mobile Hrule
+            // Mobile Hr
             createHr.buildElement('details-container', ['job-hr']);
             // Tags
             createContainer.buildElement('job-container', ['tag-box']);
-            createSpan.buildElement('tag-box', ['role']);
-            createSpan.buildElement('tag-box', ['level']);
-            createSpan.buildElement('tag-box', ['languages'], 3);
-            createSpan.buildElement('tag-box', ['tools'], 0);
-            // Addition of elements attribute
-            const imgBoxLength = $(".img-box").length;
-            for (let jobNumber = 0; jobNumber < imgBoxLength; jobNumber++) {
-                console.log(result[jobNumber]['logo'])
-                createLogo.addAttribute('img-box', 'logo', "src", `${result[jobNumber]['logo']}`);
+            for (let id = 0; id < result.length; id++) {
+                // console.log(result[id])
+                // console.log()
+                createLogo.addAttribute('logo', id, "src", `${result[id]['logo']}`);
             }
+            // createSpan.buildElement('status-box', ['company']);
+            // createSpan.buildElement('status-box', ['new', 'status']);
+            // createSpan.buildElement('status-box', ['featured', 'status']);
+            // createListItem.buildElement('more-info-box', ['postedAt']);
+            // createListItem.buildElement('more-info-box', ['contract']);
+            // createListItem.buildElement('more-info-box', ['location']);
+            // createSpan.buildElement('tag-box', ['role']);
+            // createSpan.buildElement('tag-box', ['level']);
+            // createSpan.buildElement('tag-box', ['languages'], 3);
+            // createSpan.buildElement('tag-box', ['tools'], 0);
+            // Addition of elements attribute
+            // for (let jobNumber = 0; jobNumber < imgBoxLength; jobNumber++) {
+            //     console.log(result[jobNumber]['logo'])
+            //     createLogo.addAttribute('img-box', 'logo', "src", `${result[jobNumber]['logo']}`);
+            // }
         } else {
             console.log(`Error:${status}`);
         }
