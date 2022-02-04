@@ -8,7 +8,7 @@ $(document).ready(() => {
         constructor(buildName) {
             this.buildName = buildName;
         }
-        buildElement(buildParentClass, buildClass, buildCount) {
+        buildElement(buildParentClass, buildClass = false, buildCount = 1) {
             /* 
             * Description. Generate one or more element and append it to the provided parent.
             * @param {String} buildParentClass - parent element selector.
@@ -16,8 +16,6 @@ $(document).ready(() => {
             * @param {Number} buildCount - number of element to be created
             */
             const parentElement = document.querySelectorAll(`.${buildParentClass}`);
-
-            console.log(parentElement)
             for (let parentCount = 0; parentCount < parentElement.length; parentCount++) {
                 // Iterate over parent(s) count
                 for (let i = 0; i < buildCount; i++) {
@@ -25,32 +23,27 @@ $(document).ready(() => {
                     const element = document.createElement(this.buildName);
                     parentElement[parentCount].appendChild(element);
                     // Add class
-                    for (let j = 0; j < buildClass.length; j++) {
-                        element.classList.add(buildClass[j])
+                    if (buildClass) {
+                        for (let j = 0; j < buildClass.length; j++) {
+                            element.classList.add(buildClass[j])
+                        }
                     }
                 }
             }
         }
-        addAttribute(buildParentClass, targetClass, attrObj) {
+        addAttribute(buildParentClass, targetClass, attrName, attrValue) {
             /*
             * Description. Add attributes to an element.
             * @param {String} buildParentClass - parent element selector.
             * @param {String} targetClass - child element selector.
-            * @param {Object} attrObj - attributes to be added.
+            * @param {String} attrName - attribute to be added.
+            * @param {String} attrValue - attribute value.
             */
            const parentElement = document.querySelectorAll(`.${buildParentClass}`);
-            if (attrObj) {
-                // console.log(parentLength)
+            if (buildParentClass && targetClass && attrName && attrValue) {
                 for (let parentCount = 0; parentCount < parentElement.length; parentCount++) {
-                    // console.log(parent[parentCount])
-                    for (const attr in attrObj) {
-                        console.log(attrObj[attr])
-                    }
-                    // SET ATTRIBUTE NODE method
-                    // var h1 = document.getElementsByTagName("H1")[0];   // Get the first <h1> element in the document
-                    // var att = document.createAttribute("class");       // Create a "class" attribute
-                    // att.value = "democlass";                           // Set the value of the class attribute
-                    // h1.setAttributeNode(att);                          // Add the class attribute to <h1>
+                    const targetElement = document.querySelectorAll(`.${targetClass}`);
+                    $(targetElement[parentCount]).attr(attrName, attrValue);
                 }
             } else {
                 throw new Error("Attribute insertion failed: Missing object parameters");
@@ -60,17 +53,39 @@ $(document).ready(() => {
     // Builder TEST
     const createContainer = new ElementBuilder('div');
     const createLogo = new ElementBuilder('img');
+    const createSpan = new ElementBuilder('span');
+    const createParagraph = new ElementBuilder('p');
+    const createUlist = new ElementBuilder('ul');
+    const createListItem = new ElementBuilder('li');
+    const createHr = new ElementBuilder('hr');
 
     // Job Container
-    createContainer.buildElement('main-container', ['job-container'], 3);
-    // Details box & Tags
-    createContainer.buildElement('job-container', ['details-container'], 1);
-    createContainer.buildElement('job-container', ['tag-box'], 1);
+    createContainer.buildElement('main-container', ['job-container']);
+    // Details box
+    createContainer.buildElement('job-container', ['details-container']);
     // Image
-    createContainer.buildElement('details-container', ['img-box'], 1);
-    createLogo.buildElement('img-box', ['logo'], 1);
-    createLogo.addAttribute('job-container', 'logo', {src: '../images/image.jpg'});
-
+    createContainer.buildElement('details-container', ['img-box']);
+    createLogo.buildElement('img-box', ['logo']);
+    createLogo.addAttribute('img-box', 'logo', "src", '../images/photosnap.svg');
+    // Details box
+    createContainer.buildElement('details-container', ['details-box']);
+    createContainer.buildElement('details-box', ['status-box']);
+    createSpan.buildElement('status-box', ['company']);
+    createSpan.buildElement('status-box', ['new', 'status']);
+    createSpan.buildElement('status-box', ['featured', 'status']);
+    createParagraph.buildElement('details-box', ['position']);
+    createUlist.buildElement('details-box', ['more-info-box']);
+    createListItem.buildElement('more-info-box', ['postedAt']);
+    createListItem.buildElement('more-info-box', ['contract']);
+    createListItem.buildElement('more-info-box', ['location']);
+    // Mobile Hrule
+    createHr.buildElement('details-container', ['job-hr']);
+    // Tags
+    createContainer.buildElement('job-container', ['tag-box']);
+    createSpan.buildElement('tag-box', ['role']);
+    createSpan.buildElement('tag-box', ['level']);
+    createSpan.buildElement('tag-box', ['languages'], 3);
+    createSpan.buildElement('tag-box', ['tools'], 0);
     // Fetch JSON file
     $.getJSON("../data.json", (result, status) => {
         if (status === "success") {
@@ -79,7 +94,7 @@ $(document).ready(() => {
             //         console.log(result[0][key])
             //     }
             // };
-            console.log(result[0])
+            console.log(result)
         } else {
             console.log(`Error:${status}`);
         }
