@@ -8,7 +8,7 @@ $(document).ready(() => {
         constructor(buildName) {
             this.buildName = buildName;
         }
-        buildElement(buildParentClass, buildClass = false, buildCount = 1) {
+        buildElement(buildParentClass, buildClass = false, buildCount = 1, iterateOnce = false, targetId = 0) {
             /* 
             * Description. Generate one or more element and append it to the provided parent.
             * @param {String} buildParentClass - parent element selector.
@@ -16,12 +16,12 @@ $(document).ready(() => {
             * @param {Number} buildCount - number of element to be created
             */
             const parentElement = document.querySelectorAll(`.${buildParentClass}`);
-            for (let parentCount = 0; parentCount < parentElement.length; parentCount++) {
-                // Iterate over parent(s) count
+            if (iterateOnce) {
                 for (let i = 0; i < buildCount; i++) {
                     // Iterate over buildCount
                     const element = document.createElement(this.buildName);
-                    parentElement[parentCount].appendChild(element);
+                    // console.log(parentElement[i])
+                    parentElement[targetId].appendChild(element);
                     // Add class
                     if (buildClass) {
                         for (let j = 0; j < buildClass.length; j++) {
@@ -29,22 +29,51 @@ $(document).ready(() => {
                         }
                     }
                 }
+            } else {
+                for (let parentCount = 0; parentCount < parentElement.length; parentCount++) {
+                    // Iterate over parent(s) count
+                    for (let i = 0; i < buildCount; i++) {
+                        // Iterate over buildCount
+                        const element = document.createElement(this.buildName);
+                        parentElement[parentCount].appendChild(element);
+                        // Add class
+                        if (buildClass) {
+                            for (let j = 0; j < buildClass.length; j++) {
+                                element.classList.add(buildClass[j])
+                            }
+                        }
+                    }
+                }
+
             }
         }
-        addAttribute(targetClass, targetId, attrName, attrValue) {
+        addAttribute(targetClass = null, targetId = null, attrName = null, attrValue = null) {
             /*
             * Description. Add attributes to an element.
-            * @param {String} buildParentClass - parent element selector.
-            * @param {String} targetClass - child element selector.
+            * @param {String} targetClass - element selector.
+            * @param {Number} targetId - Id to access the result object.
             * @param {String} attrName - attribute to be added.
             * @param {String} attrValue - attribute value.
             */
-           const targetElement = document.querySelectorAll(`.${targetClass}`)[targetId];
-           console.log(targetElement, targetId)
-            if (targetClass && attrName && attrValue) {
-                $(targetElement).attr(attrName, attrValue);
+            if (targetClass === null && targetId === null && textValue === null) {
+                throw new Error("Text insertion failed: Missing object parameters");
             } else {
-                throw new Error("Attribute insertion failed: Missing object parameters");
+                const targetElement = document.querySelectorAll(`.${targetClass}`);
+                $(targetElement[targetId]).attr(attrName, attrValue);
+            }
+        }
+        addText(targetClass = null, targetId = null, textValue = null) {
+            /*
+            * Description. Add text to an element.
+            * @param {String} targetClass - element selector.
+            * @param {Number} targetId - Id to access the result object.
+            * @param {String} textValue - string to add.
+            */
+            if (targetClass === null && targetId === null && textValue === null) {
+                throw new Error("Text insertion failed: Missing object parameters");
+            } else {
+                const targetElement = document.querySelectorAll(`.${targetClass}`);
+                $(targetElement)[targetId].innerHTML = textValue;
             }
         }
     }
@@ -60,15 +89,12 @@ $(document).ready(() => {
             const createListItem = new ElementBuilder('li');
             const createHr = new ElementBuilder('hr');
 
-            // console.log(result)
-            for (const jobId in result) {
-                // console.log(result[jobId])
-                // Job Container
-                createContainer.buildElement('main-container', ['job-container']);
-            }
+            console.log(result)
+            const resultLength = result.length;
+            createContainer.buildElement('main-container', ['job-container'], resultLength);
             // Details container
             createContainer.buildElement('job-container', ['details-container']);
-            // Image
+            // Image box
             createContainer.buildElement('details-container', ['img-box']);
             createLogo.buildElement('img-box', ['logo']);
             // Details box
@@ -76,18 +102,24 @@ $(document).ready(() => {
             createContainer.buildElement('details-box', ['status-box']);
             createParagraph.buildElement('details-box', ['position']);
             createUlist.buildElement('details-box', ['more-info-box']);
+            // Status Content
+            createSpan.buildElement('status-box', ['company']);
+            createSpan.buildElement('status-box', ['featured', 'status']);
             // Mobile Hr
             createHr.buildElement('details-container', ['job-hr']);
             // Tags
             createContainer.buildElement('job-container', ['tag-box']);
-            for (let id = 0; id < result.length; id++) {
-                // console.log(result[id])
-                // console.log()
-                createLogo.addAttribute('logo', id, "src", `${result[id]['logo']}`);
+            for (let id = 0; id < resultLength; id++) {
+                // Image Attribute
+                createLogo.addAttribute('logo', id, "src", result[id]['logo']);
+                // Details box text
+                createSpan.addText('company', id, result[id]['company']);
+                // console.log(result[id]['new'])
+                if (result[id]['new'] === true) {
+                    console.log(id)
+                    createSpan.buildElement('status-box', ['new', 'status'], 1, true, id);
+                }
             }
-            // createSpan.buildElement('status-box', ['company']);
-            // createSpan.buildElement('status-box', ['new', 'status']);
-            // createSpan.buildElement('status-box', ['featured', 'status']);
             // createListItem.buildElement('more-info-box', ['postedAt']);
             // createListItem.buildElement('more-info-box', ['contract']);
             // createListItem.buildElement('more-info-box', ['location']);
