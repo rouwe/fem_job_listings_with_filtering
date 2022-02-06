@@ -8,12 +8,14 @@ $(document).ready(() => {
         constructor(buildName) {
             this.buildName = buildName;
         }
-        buildElement(buildParentClass, buildClass = false, buildCount = 1, iterateOnce = false, targetId = 0) {
+        buildElement(buildParentClass, buildClass = false, buildCount = 1,iterateOnce = false, targetId = 0) {
             /* 
             * Description. Generate one or more element and append it to the provided parent.
             * @param {String} buildParentClass - parent element selector.
             * @param {Array} buildClass - array of class to be inserted.
             * @param {Number} buildCount - number of element to be created
+            * @param {Boolean} iterateOnce - iterate over parent or not
+            * @param {Number} targetId - object content identifier for each job 
             */
             const parentElement = document.querySelectorAll(`.${buildParentClass}`);
             if (iterateOnce) {
@@ -100,25 +102,47 @@ $(document).ready(() => {
             // Details box
             createContainer.buildElement('details-container', ['details-box']);
             createContainer.buildElement('details-box', ['status-box']);
-            createParagraph.buildElement('details-box', ['position']);
-            createUlist.buildElement('details-box', ['more-info-box']);
             // Status Content
             createSpan.buildElement('status-box', ['company']);
-            createSpan.buildElement('status-box', ['featured', 'status']);
-            // Mobile Hr
-            createHr.buildElement('details-container', ['job-hr']);
             // Tags
             createContainer.buildElement('job-container', ['tag-box']);
+            // Add Content & Attributes
             for (let id = 0; id < resultLength; id++) {
                 // Image Attribute
                 createLogo.addAttribute('logo', id, "src", result[id]['logo']);
                 // Details box text
                 createSpan.addText('company', id, result[id]['company']);
-                // console.log(result[id]['new'])
+                // New Tag
                 if (result[id]['new'] === true) {
-                    console.log(id)
                     createSpan.buildElement('status-box', ['new', 'status'], 1, true, id);
+                    createParagraph.buildElement('new', ['new-text'], 1, true, id);
+                    createSpan.addText('new-text', id, 'New!');
                 }
+                // Featured Tag
+                if (result[id]['featured'] === true) {
+                    createSpan.buildElement('status-box', ['featured', 'status'], 1, true, id);
+                    createParagraph.buildElement('featured', ['featured-text'], 1, true, id);
+                    createSpan.addText('featured-text', id, 'Featured');
+                }
+                // Position
+                createParagraph.buildElement('details-box', ['position'], 1, true, id);
+                createParagraph.addText('position', id, result[id]['position']);
+                // Mobile Hr
+                createHr.buildElement('details-container', ['job-hr'], 1, true, id);
+                // More Info
+                createUlist.buildElement('details-box', ['more-info-box'], 1, true, id);
+                createListItem.buildElement('more-info-box', ['postedAt'], 1, true, id);
+                createListItem.addText('postedAt', id, result[id]['postedAt']);
+                createListItem.buildElement('more-info-box', ['contract'], 1, true, id);
+                createListItem.addText('contract', id, result[id]['contract']);
+                createListItem.buildElement('more-info-box', ['location'], 1, true, id);
+                createListItem.addText('location', id, result[id]['location']);
+                // Tag Box
+                createSpan.buildElement('tag-box', ['role'], 1, true, id);
+                createSpan.addText('role', id, result[id]['role']);
+                createSpan.buildElement('tag-box', ['level'], 1, true, id);
+                createSpan.addText('level', id, result[id]['level']);
+                // Languages & Tools
             }
             // createListItem.buildElement('more-info-box', ['postedAt']);
             // createListItem.buildElement('more-info-box', ['contract']);

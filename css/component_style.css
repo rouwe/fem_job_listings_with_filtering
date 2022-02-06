@@ -45,12 +45,14 @@
     margin: 0 4px;
     border-radius: 25px;
 }
-.new {
+.new, .featured {
+    text-transform: uppercase;
     color: hsl(0, 0%, 100%);
+}
+.new {
     background-color: var(--primary);
 }
 .featured {
-    color: hsl(0, 0%, 100%);
     background-color: var(--very-dark-grayish-cyan); 
 }
 .status p {
