@@ -107,7 +107,10 @@ $(document).ready(() => {
             // Tags
             createContainer.buildElement('job-container', ['tag-box']);
             // Add Content & Attributes
+            let langArr = [];
+            let toolArr = [];
             for (let id = 0; id < resultLength; id++) {
+                console.log(id)
                 // Image Attribute
                 createLogo.addAttribute('logo', id, "src", result[id]['logo']);
                 // Details box text
@@ -143,6 +146,29 @@ $(document).ready(() => {
                 createSpan.buildElement('tag-box', ['level'], 1, true, id);
                 createSpan.addText('level', id, result[id]['level']);
                 // Languages & Tools
+                if (result[id]['languages'] !== []) {
+                    for (const lang of result[id]['languages']) {
+                        createSpan.buildElement('tag-box', ['languages'], 1, true, id);
+                        langArr.push(lang);
+                        if (id === 9) {
+                            for (let langId = 0; langId < langArr.length; langId++) {
+                                createSpan.addText('languages', langId, langArr[langId]);
+                            }
+                        }
+                    }
+                }
+                if (result[id]['tools'] !== []) {
+                    for (const tool of result[id]['tools']) {
+                        createSpan.buildElement('tag-box', ['tools'], 1, true, id);
+                        toolArr.push(tool);
+                        if (id === 9) {
+                            for (let toolId = 0; toolId < toolArr.length; toolId++) {
+                                createSpan.addText('tools', toolId, toolArr[toolId]);
+                            }
+                        }
+                    }
+                }
+                // console.log(document.querySelectorAll('.languages', result[id]['languages']))
             }
             // createListItem.buildElement('more-info-box', ['postedAt']);
             // createListItem.buildElement('more-info-box', ['contract']);

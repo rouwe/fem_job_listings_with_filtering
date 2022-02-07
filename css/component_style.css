@@ -94,14 +94,14 @@
 .tag-box {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 0px 24px 0 19px;
 }
 .tag-box span {
     font-size: 0.85rem;
     font-weight: 600;
     padding: 7px 8px 5px;
-    margin: 8px 10px 8px 0;
+    margin: 8px 18px 8px 0;
     border-radius: 3px;
     color: var(--primary);
     background-color: hsl(180, 29%, 50%, 0.12);
