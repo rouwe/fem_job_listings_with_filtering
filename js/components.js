@@ -22,7 +22,6 @@ $(document).ready(() => {
                 for (let i = 0; i < buildCount; i++) {
                     // Iterate over buildCount
                     const element = document.createElement(this.buildName);
-                    // console.log(parentElement[i])
                     parentElement[targetId].appendChild(element);
                     // Add class
                     if (buildClass) {
@@ -91,7 +90,6 @@ $(document).ready(() => {
             const createListItem = new ElementBuilder('li');
             const createHr = new ElementBuilder('hr');
 
-            console.log(result)
             const resultLength = result.length;
             createContainer.buildElement('main-container', ['job-container'], resultLength);
             // Details container
@@ -110,7 +108,6 @@ $(document).ready(() => {
             let langArr = [];
             let toolArr = [];
             for (let id = 0; id < resultLength; id++) {
-                console.log(id)
                 // Image Attribute
                 createLogo.addAttribute('logo', id, "src", result[id]['logo']);
                 // Details box text
@@ -168,20 +165,7 @@ $(document).ready(() => {
                         }
                     }
                 }
-                // console.log(document.querySelectorAll('.languages', result[id]['languages']))
             }
-            // createListItem.buildElement('more-info-box', ['postedAt']);
-            // createListItem.buildElement('more-info-box', ['contract']);
-            // createListItem.buildElement('more-info-box', ['location']);
-            // createSpan.buildElement('tag-box', ['role']);
-            // createSpan.buildElement('tag-box', ['level']);
-            // createSpan.buildElement('tag-box', ['languages'], 3);
-            // createSpan.buildElement('tag-box', ['tools'], 0);
-            // Addition of elements attribute
-            // for (let jobNumber = 0; jobNumber < imgBoxLength; jobNumber++) {
-            //     console.log(result[jobNumber]['logo'])
-            //     createLogo.addAttribute('img-box', 'logo', "src", `${result[jobNumber]['logo']}`);
-            // }
         } else {
             console.log(`Error:${status}`);
         }
