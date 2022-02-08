@@ -140,8 +140,10 @@ $(document).ready(() => {
                 // Tag Box
                 createSpan.buildElement('tag-box', ['role'], 1, true, id);
                 createSpan.addText('role', id, result[id]['role']);
+                createSpan.addAttribute('role', id, 'data-role', result[id]['role']);
                 createSpan.buildElement('tag-box', ['level'], 1, true, id);
                 createSpan.addText('level', id, result[id]['level']);
+                createSpan.addAttribute('level', id, 'data-level', result[id]['level']);
                 // Languages & Tools
                 if (result[id]['languages'] !== []) {
                     for (const lang of result[id]['languages']) {
@@ -150,6 +152,7 @@ $(document).ready(() => {
                         if (id === 9) {
                             for (let langId = 0; langId < langArr.length; langId++) {
                                 createSpan.addText('languages', langId, langArr[langId]);
+                                createSpan.addAttribute('languages', langId, 'data-languages', langArr[langId]);
                             }
                         }
                     }
@@ -161,13 +164,14 @@ $(document).ready(() => {
                         if (id === 9) {
                             for (let toolId = 0; toolId < toolArr.length; toolId++) {
                                 createSpan.addText('tools', toolId, toolArr[toolId]);
+                                createSpan.addAttribute('tools', toolId, 'data-tools', toolArr[toolId]);
                             }
                         }
                     }
                 }
             }
         } else {
-            console.log(`Error:${status}`);
+            throw new Error(`Error:${status}`);
         }
     });
 })
