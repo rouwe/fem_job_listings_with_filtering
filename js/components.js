@@ -138,16 +138,16 @@ $(document).ready(() => {
                 createListItem.buildElement('more-info-box', ['location'], 1, true, id);
                 createListItem.addText('location', id, result[id]['location']);
                 // Tag Box
-                createSpan.buildElement('tag-box', ['role'], 1, true, id);
+                createSpan.buildElement('tag-box', ['role', 'category'], 1, true, id);
                 createSpan.addText('role', id, result[id]['role']);
                 createSpan.addAttribute('role', id, 'data-role', result[id]['role']);
-                createSpan.buildElement('tag-box', ['level'], 1, true, id);
+                createSpan.buildElement('tag-box', ['level', 'category'], 1, true, id);
                 createSpan.addText('level', id, result[id]['level']);
                 createSpan.addAttribute('level', id, 'data-level', result[id]['level']);
                 // Languages & Tools
                 if (result[id]['languages'] !== []) {
                     for (const lang of result[id]['languages']) {
-                        createSpan.buildElement('tag-box', ['languages'], 1, true, id);
+                        createSpan.buildElement('tag-box', ['languages', 'category'], 1, true, id);
                         langArr.push(lang);
                         if (id === 9) {
                             for (let langId = 0; langId < langArr.length; langId++) {
@@ -159,7 +159,7 @@ $(document).ready(() => {
                 }
                 if (result[id]['tools'] !== []) {
                     for (const tool of result[id]['tools']) {
-                        createSpan.buildElement('tag-box', ['tools'], 1, true, id);
+                        createSpan.buildElement('tag-box', ['tools', 'category'], 1, true, id);
                         toolArr.push(tool);
                         if (id === 9) {
                             for (let toolId = 0; toolId < toolArr.length; toolId++) {
@@ -169,6 +169,20 @@ $(document).ready(() => {
                         }
                     }
                 }
+            }
+            // Add Event Listeners
+            const [roleCategories, levelCategories, languagesCategories, toolsCategories] = [$('span[data-role]'),  $('span[data-level]'), $('span[data-languages]'), $('span[data-tools]')];
+            for (let roleCategory of roleCategories) {
+                roleCategory.addEventListener('click', filterByRole);
+            }
+            for (let levelCategory of levelCategories) {
+                levelCategory.addEventListener('click', filterByLevel);
+            }
+            for (let languagesCategory of languagesCategories) {
+                languagesCategory.addEventListener('click', filterByLanguages);
+            }
+            for (let toolsCategory of toolsCategories) {
+                toolsCategory.addEventListener('click', filterByTools);
             }
         } else {
             throw new Error(`Error:${status}`);

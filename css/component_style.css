@@ -109,3 +109,6 @@
 .tag-box span:last-child {
     margin-right: auto;
 }
+.category {
+    cursor: pointer;
+}
