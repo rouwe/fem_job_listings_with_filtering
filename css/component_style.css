@@ -3,10 +3,26 @@
     display: flex;
     flex-direction: column;
     padding: 0 0 20px;
+    margin-bottom: 2.5rem;
     border-left: 5px solid var(--primary);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    box-shadow: 0px 3px 10px hsl(180, 29%, 50%, 0.4);
+    box-shadow: 0px 3px 10px 1px hsl(180, 29%, 50%, 0.4);
+}
+#filters-container {
+    position: relative;
+    top: -14vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 60px;
+    border-radius: 4px;
+    box-shadow: 0px 2px 10px 5px hsl(180, 29%, 50%, 0.4); 
+    background-color: hsl(0, 0%, 100%);
+}
+.btn-reset {
+    align-self: center;
 }
 .details-container {
     position: relative;

@@ -1,3 +1,25 @@
+let filtersApplied = [];
+function addFilter(filterValue, roleTag) {
+    // Add a filter button inside filters container
+    if (!filtersApplied.includes(filterValue)) {
+        const filterContainer = $('#filters-container');
+        const filterBox = document.createElement('div');
+        const resetBox = document.createElement('div');
+        $(filterContainer).append(filterBox);
+        $(filterBox).attr('class', 'filter-box');
+        $(filterContainer).append(resetBox);
+        $(resetBox).attr('class', 'reset-box');
+        const createButton = document.createElement('button');
+        const createResetButton = document.createElement('button');
+        $(createButton).attr("class", 'btn-filter');
+        $(createButton).text(roleTag);
+        $(createResetButton).attr('class', 'btn-reset');
+        $(createResetButton).text('Clear');
+        filterBox.appendChild(createButton);
+        resetBox.appendChild(createResetButton);
+        filtersApplied.push(filterValue);
+    }
+}
 function filterByRole() {
     // Filter job lists depending on roles
     const roleTag = this.innerHTML;
@@ -6,6 +28,7 @@ function filterByRole() {
         // Hide elements
         $(notRole).parent().parent().css("display", "none");
     }
+    addFilter('role', roleTag);
 }
 function filterByLevel() {
     // Filter job lists depending on levels
