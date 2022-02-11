@@ -1,32 +1,41 @@
-let filterCount = 0;
-let filters = [];
+const activeFilters = new Set();
 function addFilter(category, filterValue) {
     // Add a filter button inside filters container
-    if (!filters.includes(filterValue)) {
-        filters.push(filterValue);
-        const filterButton = $(`.${category}-filter`)[0];
-        console.log($('.btn-filter')[filterCount]);
-        filterCount = filterCount + 1;
+    const categories = {
+        role: ['Frontend', 'Backend', 'Fullstack'],
+        level: ['Junior', 'Midweight', 'Senior'],
+        languages: ['Python', 'Ruby', 'Javascript', 'HTML', 'CSS'],
+        tools: ['React', 'Sass', 'Vue', 'Django', 'RoR']
+    };
+    for (let idx = 0; idx < categories[category].length; idx++) {
+        const currentTagText = categories[category][idx];
+        const currentButton = document.getElementsByClassName(`${category}-filter`)[idx];
+        if (currentTagText === filterValue) {
+            currentButton.style.display = 'flex';
+            activeFilters.add(category);
+            break;
+        }
     }
-}
+};
 function filterByRole() {
     // Filter job lists depending on roles
-    const roleTag = this.innerHTML;
-    const notRoleArr = $(`.role:not([data-role="${roleTag}"])`);
+    const roleTagText = this.innerHTML;
+    const notRoleArr = $(`.role:not([data-role="${roleTagText}"])`);
     for (const notRole of notRoleArr) {
         // Hide elements
         $(notRole).parent().parent().css("display", "none");
     }
-    addFilter('role', roleTag);
+    addFilter('role', roleTagText);
 }
 function filterByLevel() {
     // Filter job lists depending on levels
-    const levelTag = this.innerHTML;
-    const notLevelArr = $(`.level:not([data-level="${levelTag}"])`);
+    const levelTagText = this.innerHTML;
+    const notLevelArr = $(`.level:not([data-level="${levelTagText}"])`);
     for (const notLevel of notLevelArr) {
         // Hide elements
         $(notLevel).parent().parent().css("display", "none");
     }
+    addFilter('level', levelTagText);
 }
 function filterByLanguages() {
     // Filter job lists dependng on languages    
@@ -51,10 +60,11 @@ function filterByLanguages() {
     for (const toDisplay of toDisplaySet) {
         $(toDisplay[0]).css("display", "flex");
     }
+    addFilter('languages', languageTagText);
 }
 function filterByTools() {
     // Filter job lists depending on tools
-    const toolsTagText = this.innerHTML;
+    const toolTagText = this.innerHTML;
     const jobContainers = $('.tag-box');
     const toDisplaySet = new Set();
     const toCloseSet = new Set();
@@ -69,7 +79,7 @@ function filterByTools() {
                 continue;
             }
             $(job).parent().css("display", "none");
-            if (elementText === toolsTagText) {
+            if (elementText === toolTagText) {
                 toDisplaySet.add($(job).parent());
             }
             counter = counter + 1;
@@ -83,4 +93,5 @@ function filterByTools() {
     for (const toDisplay of toDisplaySet) {
         $(toDisplay[0]).css("display", "flex");
     }
+    addFilter('tools', toolTagText);
 }

@@ -35,7 +35,8 @@
     fill: hsl(0, 100%, 0%);
 }
 .filter-box {
-    display: flex;
+    display: none;
+    align-items: center;
     margin: 5px;
 }
 .btn-filter, .btn-reset {
