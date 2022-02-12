@@ -25,6 +25,7 @@
 .btn-reset {
     align-self: center;
     text-decoration: underline;
+    cursor: pointer;
 }
 .filters {
     display: flex;
@@ -43,7 +44,7 @@
     font-size: 0.85rem;
     font-weight: 600;
     padding: 7px 8px 5px;
-    margin: 8px 18px 8px 0;
+    margin: 8px 0px;
     border-radius: 3px;
     border: none;
     color: var(--primary);

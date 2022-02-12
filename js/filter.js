@@ -4,7 +4,7 @@ function addFilter(category, filterValue) {
     const categories = {
         role: ['Frontend', 'Backend', 'Fullstack'],
         level: ['Junior', 'Midweight', 'Senior'],
-        languages: ['Python', 'Ruby', 'Javascript', 'HTML', 'CSS'],
+        languages: ['Python', 'Ruby', 'JavaScript', 'HTML', 'CSS'],
         tools: ['React', 'Sass', 'Vue', 'Django', 'RoR']
     };
     for (let idx = 0; idx < categories[category].length; idx++) {
@@ -17,6 +17,29 @@ function addFilter(category, filterValue) {
         }
     }
 };
+function clearFilter() {
+    // Clear/reset filters
+    const filtersButtons = $('.filter-box') ;
+    for (const filterButton of filtersButtons) {
+        filterButton.style.display = "none";
+    }
+    const jobContainers = document.getElementsByClassName('job-container');
+    for (const jobContainer of jobContainers) {
+        jobContainer.style.display = "flex";
+    }
+}
+function undoFilter() {
+    const parentElement = $(this.parentElement);
+    const parentElementText = parentElement[0].childNodes[1].innerHTML;
+    const categories = document.getElementsByClassName('category');
+    for (const category of categories) {
+        if (category.innerHTML === parentElementText) {
+            const jobContainer = $(category).parent().parent();
+            console.log(jobContainer)
+            jobContainer[0].style.display = "none";
+        }
+    }
+}
 function filterByRole() {
     // Filter job lists depending on roles
     const roleTagText = this.innerHTML;
@@ -85,6 +108,7 @@ function filterByTools() {
             counter = counter + 1;
         }
     }
+    addFilter('tools', toolTagText);
     // Hide all elements in toCloseSet
     for (const toClose of toCloseSet) {
         $(toClose[0]).css("display", "none");
@@ -93,5 +117,4 @@ function filterByTools() {
     for (const toDisplay of toDisplaySet) {
         $(toDisplay[0]).css("display", "flex");
     }
-    addFilter('tools', toolTagText);
 }
