@@ -11,6 +11,7 @@
     box-sizing: border-box;
 }
 body {
+    position: absolute;
     margin: 0;
     padding: 0;
 }
@@ -19,6 +20,7 @@ header {
     height: 26vh;
     background-color: var(--primary);
     background-image: url('../images/bg-header-mobile.svg');
+    background-repeat: no-repeat;
     margin-bottom: 3.6rem;
 }
 .main-container {
@@ -45,4 +47,13 @@ footer {
     font-weight: 600;
     line-height: 1.4rem;
     color: var(--primary);
+}
+@media all and (min-width: 376px) {
+    header {
+        background-image: url("../images/bg-header-desktop.svg");
+        background-size: cover;
+    }
+    body {
+        position: static;
+    }
 }

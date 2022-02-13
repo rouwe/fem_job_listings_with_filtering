@@ -1,24 +1,28 @@
-const activeFilters = new Set();
+const activeFilterCategories = new Set();
+const activeFiltersTag = new Set();
+const categories = {
+    role: ['Frontend', 'Backend', 'Fullstack'],
+    level: ['Junior', 'Midweight', 'Senior'],
+    languages: ['Python', 'Ruby', 'JavaScript', 'HTML', 'CSS'],
+    tools: ['React', 'Sass', 'Vue', 'Django', 'RoR']
+};
 function addFilter(category, filterValue) {
     // Add a filter button inside filters container
-    const categories = {
-        role: ['Frontend', 'Backend', 'Fullstack'],
-        level: ['Junior', 'Midweight', 'Senior'],
-        languages: ['Python', 'Ruby', 'JavaScript', 'HTML', 'CSS'],
-        tools: ['React', 'Sass', 'Vue', 'Django', 'RoR']
-    };
+    document.getElementById('filters-container').style.display = 'flex';
     for (let idx = 0; idx < categories[category].length; idx++) {
         const currentTagText = categories[category][idx];
         const currentButton = document.getElementsByClassName(`${category}-filter`)[idx];
         if (currentTagText === filterValue) {
             currentButton.style.display = 'flex';
-            activeFilters.add(category);
+            activeFilterCategories.add(category);
+            activeFiltersTag.add(currentTagText);
             break;
         }
     }
 };
 function clearFilter() {
     // Clear/reset filters
+    document.getElementById('filters-container').style.display = 'none';
     const filtersButtons = $('.filter-box') ;
     for (const filterButton of filtersButtons) {
         filterButton.style.display = "none";
@@ -29,16 +33,28 @@ function clearFilter() {
     }
 }
 function undoFilter() {
+    // Remove a filter
     const parentElement = $(this.parentElement);
     const parentElementText = parentElement[0].childNodes[1].innerHTML;
-    const categories = document.getElementsByClassName('category');
-    for (const category of categories) {
+    const rawCategory = parentElement[0].classList[1];
+    const parentCategory = rawCategory.split('-')[0];
+    const tagCategories = document.getElementsByClassName('category');
+    for (let category of tagCategories) {
         if (category.innerHTML === parentElementText) {
             const jobContainer = $(category).parent().parent();
-            console.log(jobContainer)
             jobContainer[0].style.display = "none";
         }
     }
+    activeFiltersTag.delete(parentElementText);
+    const hasActiveCategoryFilter = categories[parentCategory].some((tag) => {
+        if (activeFiltersTag.has(tag)) {
+            return true;
+        }
+    })
+    if (!hasActiveCategoryFilter) {
+        activeFilterCategories.delete(parentCategory);
+    }
+    parentElement[0].style.display = "none";
 }
 function filterByRole() {
     // Filter job lists depending on roles
