@@ -80,7 +80,7 @@ $(document).ready(() => {
             }
         }
         // Fetch JSON file
-        $.getJSON("../data.json", (result, status) => {
+        $.getJSON("./data.json", (result, status) => {
             if (status === "success") {
                 // Define element builder
                 const createContainer = new ElementBuilder('div');
